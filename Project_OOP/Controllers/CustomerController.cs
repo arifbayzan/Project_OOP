@@ -4,56 +4,55 @@ using Project_OOP.ProjectContext;
 
 namespace Project_OOP.Controllers
 {
-    public class ProductController : Controller
+    public class CustomerController : Controller
     {
         Context context = new Context();
-
         public IActionResult Index()
         {
-            var values = context.Products.ToList();
-            return View(values);
+            var values = context.Customers.ToList();
+            return View();
         }
+
         [HttpGet]
-        public IActionResult AddProduct()
+
+        public IActionResult AddCustomer()
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult AddProduct(Product p)
+
+        public IActionResult AddCustomer(Customer p)
         {
             context.Add(p);
             context.SaveChanges();
             return RedirectToAction("Index");
         }
-        public IActionResult DeleteProduct(int id)
+
+        public IActionResult DeleteCustomer(int id)
         {
-            var value = context.Products.Where(x => x.Id == id).FirstOrDefault();
+            var value = context.Customers.Where(x => x.ID == id).FirstOrDefault();
             context.Remove(value);
-            context.SaveChanges();
             return RedirectToAction("Index");
+
         }
+
         [HttpGet]
-
-        public IActionResult UpdateProduct(int id)
+        public IActionResult UpdateCustomer(int id)
         {
-            var value = context.Products.Where(x => x.Id == id).FirstOrDefault();
+            var value = context.Customers.Where(x => x.ID == id).FirstOrDefault();
             return View(value);
-
         }
+
         [HttpPost]
 
-        public IActionResult UpdateProduct(Product p)
+        public IActionResult UpdateCustomer(Customer p)
         {
-            var value = context.Products.Where(x => x.Id == p.Id).FirstOrDefault();
+            var value = context.Customers.Where(x => x.ID == p.ID).FirstOrDefault();
+            value.City = p.City;
             value.Name = p.Name;
-            value.Price = p.Price;
-            value.Stock = p.Stock;
             context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-
-
-
     }
 }
